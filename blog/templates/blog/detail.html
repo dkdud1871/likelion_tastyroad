@@ -1,0 +1,36 @@
+{% extends "blog/base.html" %}
+{% block content %}
+
+    <div>
+        <h2>{{tastyroad.title}}</h2>
+        <p>{{tastyroad.created_date}}</p>
+        <p>{{tastyroad.text}}</p>
+       
+        <a href ="{% url 'edit' tastyroad.id %}">수정하기</a>
+        <a href ="{% url 'delete' tastyroad.id %}">삭제하기</a>
+    </div>
+
+    <p>댓글 {{ tastyroad.comments.count }}개</p>
+    <div class ="form-group">
+        <h4>댓글작성</h4>
+            <form method="POST" action="{% url 'add_comment' tastyroad.id %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type ="submit" class="save btn btn-default">작성</button>
+        </form>
+    </div>
+
+    {% for comment in tastyroad.comments.all %}
+    <div>
+        <div>{{comment.created_date}}</div>
+        <strong>{{comment.nickname}}</strong>
+        {{comment.text|linebreaks}}
+      
+    </div>
+    {% empty %}
+    <p>아무 댓글이 없어요</p>
+    {% endfor %}
+        
+      
+{% endblock %}
+

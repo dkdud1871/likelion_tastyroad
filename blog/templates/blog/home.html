@@ -1,0 +1,25 @@
+{% extends "blog/base.html" %}
+{% block content %}
+    {% if user.is_active %}
+    <p>{{ user.username }}님 반갑습니다</p>
+    <p>{{ user.nickname }}님 반갑습니다</p>
+    <P><a href="{% url 'logout' %}">logout</P>
+    {% else %}
+    <p>you are not logged in</p>
+    <a href="{% url 'login' %}">login</a>
+    {% endif %}
+
+
+
+   
+    
+    {% for tastyroad in tastyroads.all %}
+    <div>
+        <h2><a href = "{% url 'detail' tastyroad.id %}">{{tastyroad.title}}</a></h2>
+        
+        <p>{{tastyroad.created_date}}</p>
+        
+    </div>
+    {% endfor %}
+
+{% endblock %}
